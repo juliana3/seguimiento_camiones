@@ -1,0 +1,1 @@
+#trucks router / admin CRUD operations for trucks

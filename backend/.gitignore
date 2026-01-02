@@ -1,0 +1,12 @@
+venv/
+.env*
+
+__pycache__/    
+
+*.py[cod]
+*.log
+*.db
+.DS_Store
+
+alembic/versions/
+
