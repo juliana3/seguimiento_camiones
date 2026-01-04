@@ -15,6 +15,7 @@ from app.models.horario import Horario
 from app.models.notificaciones import Notificacion
 from app.models.reporte import Reporte
 from app.models.posiciones_gps import PosicionGPS
+from app.models.ubicacion_usuario import UbicacionUsuario
 
 
 # this is the Alembic Config object, which provides
@@ -41,6 +42,17 @@ target_metadata = Base.metadata
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
+
+def include_object(object, name, type_, reflected, compare_to):
+    # Ignorar tablas que no estén en el schema db
+    if type_ == "table" and object.schema != "db":
+        return False
+
+    # Ignorar tablas internas de PostGIS (por seguridad)
+    if type_ == "table" and name == "spatial_ref_sys":
+        return False
+
+    return True
 
 
 def run_migrations_offline() -> None:
@@ -82,12 +94,15 @@ def run_migrations_online() -> None:
 
     with connectable.connect() as connection:
         context.configure(
-            connection=connection, target_metadata=target_metadata
+            connection=connection,
+            target_metadata=target_metadata,
+            include_schemas=True,
+            version_table_schema="db",
+            include_object=include_object,
         )
 
         with context.begin_transaction():
             context.run_migrations()
-
 
 if context.is_offline_mode():
     run_migrations_offline()

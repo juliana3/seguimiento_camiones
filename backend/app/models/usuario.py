@@ -38,8 +38,7 @@ class Usuario(Base):
 
     #info personal
     nombre_completo = Column(Text)
-    direccion_guardada = Column(Text)
-    ubicacion_guardada = Column(Geometry(geometry_type='POINT', srid=4326))
+
 
     #estado / permisos
     rol = Column(String(20), nullable=False, default="publico")
@@ -58,3 +57,4 @@ class Usuario(Base):
     #relaciones
     notificaciones = relationship("Notificacion", back_populates="usuario")
     reportes = relationship("Reporte", back_populates="usuario")
+    ubicaciones = relationship("UbicacionUsuario", back_populates="usuario", cascade="all, delete-orphan")

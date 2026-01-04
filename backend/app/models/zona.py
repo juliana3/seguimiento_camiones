@@ -34,7 +34,7 @@ class Zona(Base):
     #relaciones
     rutas = relationship("Ruta", back_populates="zona")
     camiones = relationship("Camion", back_populates="zona")
-    horarios = relationship("Horario", back_populates="zona", uselist=False, cascade="all, delete-orphan")
+    horarios = relationship("Horario", back_populates="zona", cascade="all, delete-orphan")
     reportes = relationship("Reporte", back_populates="zona")
 
 
