@@ -4,7 +4,7 @@ from sqlalchemy import (
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from geoalchemy2 import Geometry
-from .base import Base
+from ..db.base import Base
 
 
 class UbicacionUsuario(Base):
@@ -19,7 +19,7 @@ class UbicacionUsuario(Base):
             "idx_ubicaciones_usuario_usuario",
             "usuario_id"
         ),
-        {"schema": "db"}
+         {"schema": "public"}
     )
 
     ubicacion_usuario_id = Column(Integer, primary_key=True)
@@ -41,13 +41,13 @@ class UbicacionUsuario(Base):
     # FK
     usuario_id = Column(
         Integer,
-        ForeignKey("db.usuarios.usuario_id"),
+        ForeignKey("public.usuarios.usuario_id"),
         nullable=False
     )
 
     zona_id = Column(
         Integer,
-        ForeignKey("db.zonas.zona_id"),
+        ForeignKey("public.zonas.zona_id"),
         nullable=False
     )
 

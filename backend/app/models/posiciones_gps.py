@@ -3,7 +3,7 @@ from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from geoalchemy2 import Geometry
 
-from .base import Base
+from ..db.base import Base
 
 class PosicionGPS(Base):
     __tablename__ = "posiciones_gps"
@@ -18,7 +18,7 @@ class PosicionGPS(Base):
                 "camion_id",
                 "timestamp"
             ),
-            {"schema": "db"}
+             {"schema": "public"}
     )
 
     gps_pos_id = Column(Integer, primary_key=True, nullable=False)
@@ -31,7 +31,7 @@ class PosicionGPS(Base):
     timestamp = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
 
     #fk
-    camion_id = Column(Integer, ForeignKey("db.camiones.camion_id"), nullable=False)
+    camion_id = Column(Integer, ForeignKey("public.camiones.camion_id"), nullable=False)
 
     #auditoria
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)

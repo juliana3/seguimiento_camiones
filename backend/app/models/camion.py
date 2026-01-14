@@ -2,12 +2,12 @@ from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Boolean
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 
-from .base import Base
+from ..db.base import Base
 
 class Camion(Base):
     __tablename__ = "camiones"
     __table_args__ = (
-        {"schema": "db"}
+         {"schema": "public"}
     )
 
     camion_id = Column(Integer, primary_key=True, nullable=False)
@@ -15,7 +15,7 @@ class Camion(Base):
     esta_activo = Column(Boolean, default=True) 
 
     #fk 
-    zona_id = Column(Integer, ForeignKey("db.zonas.zona_id"), nullable=False)
+    zona_id = Column(Integer, ForeignKey("public.zonas.zona_id"), nullable=False)
 
     #auditoria
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)

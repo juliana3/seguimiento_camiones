@@ -2,12 +2,12 @@ from sqlalchemy import Boolean, Column, Integer, String, Text, DateTime, Foreign
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 
-from .base import Base
+from ..db.base import Base
 
 class Notificacion(Base):
     __tablename__ = "notificaciones"
     __table_args__ = (
-        {"schema": "db"}
+         {"schema": "public"}
     )
 
     notificacion_id = Column(Integer, primary_key=True, nullable=False)
@@ -21,7 +21,7 @@ class Notificacion(Base):
 
 
     #fk
-    usuario_id = Column(Integer, ForeignKey("db.usuarios.usuario_id"), nullable=False)
+    usuario_id = Column(Integer, ForeignKey("public.usuarios.usuario_id"), nullable=False)
 
     #auditoria
 

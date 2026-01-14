@@ -3,7 +3,7 @@ from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from geoalchemy2 import Geometry
 
-from .base import Base
+from ..db.base import Base
 
 class Zona(Base):
     __tablename__ = "zonas"
@@ -13,7 +13,7 @@ class Zona(Base):
             "geometria",
             postgresql_using="gist"
         ),
-        {"schema": "db"}
+         {"schema": "public"}
     )
 
     zona_id = Column(Integer, primary_key=True, nullable=False)

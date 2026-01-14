@@ -1,4 +1,4 @@
-from .base import Base
+from ..db.base import Base
 
 from .usuario import Usuario
 from .reporte import Reporte

@@ -1,7 +1,7 @@
 from sqlalchemy import CheckConstraint, Column, DateTime, Integer, String, Time, ForeignKey, SmallInteger, UniqueConstraint
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
-from .base import Base
+from ..db.base import Base
 
 class Horario(Base):
     __tablename__ = "horarios"
@@ -20,7 +20,7 @@ class Horario(Base):
             "tipo_residuo",
             name="unq_horarios_zona_dia_residuo"
         ),
-        {"schema": "db"}
+         {"schema": "public"}
     )
 
 
@@ -32,7 +32,7 @@ class Horario(Base):
 
 
     #fk
-    zona_id = Column(Integer, ForeignKey("db.zonas.zona_id"), nullable=False)
+    zona_id = Column(Integer, ForeignKey("public.zonas.zona_id"), nullable=False)
 
     #auditoria
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)

@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, Text, Boolean, String, DateTime, CheckCo
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from geoalchemy2 import Geometry
-from .base import Base
+from ..db.base import Base
 
 class Usuario(Base):
     __tablename__ = "usuarios"
@@ -11,7 +11,7 @@ class Usuario(Base):
             "rol IN ('publico', 'registrado', 'admin', 'superadmin')",
             name="cns_usuario_rol"
         ),
-        {"schema": "db"}
+         {"schema": "public"}
     )
 
     #identidad del usuraio

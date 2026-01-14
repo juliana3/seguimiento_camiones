@@ -3,7 +3,7 @@ from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from geoalchemy2 import Geometry
 
-from .base import Base
+from ..db.base import Base
 
 class Ruta(Base):
     __tablename__ = "rutas"
@@ -14,7 +14,7 @@ class Ruta(Base):
             postgresql_using="gist"
         ),
 
-        {"schema": "db"}
+         {"schema": "public"}
     )
 
 
@@ -27,7 +27,7 @@ class Ruta(Base):
     descripcion = Column(Text)
 
     #fk de la zona
-    zona_id = Column(Integer, ForeignKey("db.zonas.zona_id"), nullable=False)
+    zona_id = Column(Integer, ForeignKey("public.zonas.zona_id"), nullable=False)
 
 
     #auditoria

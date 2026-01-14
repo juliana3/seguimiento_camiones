@@ -4,7 +4,9 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
-from app.models.base import Base
+from app.db.base import Base
+
+
 
 #importaciones de modelos
 from app.models.usuario import Usuario
@@ -24,7 +26,7 @@ config = context.config
 
 from app.config import settings
 
-config.set_main_option("sqlalchemy.url", settings.DATABASE_URL_SYNC)
+config.set_main_option("sqlalchemy.url", settings.DATABASE_URL)
 
 
 # Interpret the config file for Python logging.
@@ -44,14 +46,24 @@ target_metadata = Base.metadata
 # ... etc.
 
 def include_object(object, name, type_, reflected, compare_to):
-    # Ignorar tablas que no estén en el schema db
-    if type_ == "table" and object.schema != "db":
+    """
+    Ignorar tablas de extensiones de PostgreSQL (PostGIS, Tiger Geocoder, etc.)
+    """
+    ignored_tables = {
+        'spatial_ref_sys', 'geocode_settings', 'geocode_settings_default',
+        'direction_lookup', 'secondary_unit_lookup', 'street_type_lookup',
+        'place_lookup', 'county_lookup', 'state_lookup', 'countysub_lookup',
+        'zip_lookup_base', 'zip_lookup', 'zip_lookup_all', 'zip_state',
+        'zip_state_loc', 'county', 'state', 'place', 'cousub', 'edges',
+        'faces', 'featnames', 'addr', 'addrfeat', 'bg', 'tabblock', 'tabblock20',
+        'tract', 'zcta5', 'loader_platform', 'loader_variables', 
+        'loader_lookuptables', 'pagc_gaz', 'pagc_lex', 'pagc_rules',
+        'topology', 'layer'
+    }
+    
+    if type_ == "table" and name in ignored_tables:
         return False
-
-    # Ignorar tablas internas de PostGIS (por seguridad)
-    if type_ == "table" and name == "spatial_ref_sys":
-        return False
-
+    
     return True
 
 
@@ -96,9 +108,8 @@ def run_migrations_online() -> None:
         context.configure(
             connection=connection,
             target_metadata=target_metadata,
-            include_schemas=True,
-            version_table_schema="db",
             include_object=include_object,
+            compare_type=True,
         )
 
         with context.begin_transaction():

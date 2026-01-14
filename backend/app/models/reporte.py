@@ -3,7 +3,7 @@ from geoalchemy2 import Geometry
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 
-from .base import Base
+from ..db.base import Base
 
 class Reporte(Base):
     __tablename__ = "reportes"
@@ -24,7 +24,7 @@ class Reporte(Base):
         ),
 
 
-        {"schema": "db"}
+         {"schema": "public"}
     )
 
     reporte_id = Column(Integer, primary_key=True, nullable=False)
@@ -34,10 +34,10 @@ class Reporte(Base):
 
 
     #fk
-    usuario_id = Column(Integer, ForeignKey("db.usuarios.usuario_id"), nullable=False)
-    camion_id = Column(Integer, ForeignKey("db.camiones.camion_id"), nullable=True)
-    ruta_id = Column(Integer, ForeignKey("db.rutas.ruta_id"), nullable=True)
-    zona_id = Column(Integer, ForeignKey("db.zonas.zona_id"), nullable=False)
+    usuario_id = Column(Integer, ForeignKey("public.usuarios.usuario_id"), nullable=False)
+    camion_id = Column(Integer, ForeignKey("public.camiones.camion_id"), nullable=True)
+    ruta_id = Column(Integer, ForeignKey("public.rutas.ruta_id"), nullable=True)
+    zona_id = Column(Integer, ForeignKey("public.zonas.zona_id"), nullable=False)
 
 
     #auditoria
