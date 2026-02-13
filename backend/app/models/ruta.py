@@ -40,7 +40,7 @@ class Ruta(Base):
         nullable=False
     )
 
-    #relaciones
+    #relaciones de ruta 
 
     zona = relationship("Zona", back_populates="rutas")
     reportes = relationship("Reporte", back_populates="ruta")

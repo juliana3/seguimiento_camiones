@@ -3,19 +3,11 @@ from pydantic import BaseModel, Field, model_validator
 from typing import Optional, Dict, Any
 from datetime import datetime, time
 
-class TipoResiduoEnum(IntEnum):
-    HUMEDOS = 1
-    SECOS = 2
+from ..utils.constantes import DiaSemanaEnum, TipoResiduoEnum
 
 
-class DiaSemanaEnum(IntEnum):
-    DOMINGO = 0
-    LUNES = 1
-    MARTES = 2
-    MIERCOLES = 3
-    JUEVES = 4
-    VIERNES = 5
-    SABADO = 6
+
+
 
 
 class HorarioCreate(BaseModel):

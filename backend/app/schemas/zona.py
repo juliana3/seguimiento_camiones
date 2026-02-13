@@ -2,6 +2,8 @@ from pydantic import BaseModel, Field, model_validator
 from typing import Optional, Dict, Any
 from datetime import datetime
 
+from ..utils.constantes import DiaSemanaEnum
+
 class ZonaCreate(BaseModel):
     codigo : str = Field(
         ..., 
@@ -28,6 +30,11 @@ class ZonaCreate(BaseModel):
         pattern="^#([A-Fa-f0-9]{6})$",
         description="Color representativo de la zona en formato hexadecimal.",
         examples=["#FF5733", "#33FF57"]
+    )
+
+    excluye_dia : Optional[DiaSemanaEnum] = Field(
+        None, 
+        description="Día de la semana en el que NO hay recolección en esta zona.",
     )
 
     #GEOJson pegado por el admin
@@ -80,6 +87,8 @@ class ZonaUpdate(BaseModel):
         description="Color representativo de la zona en formato hexadecimal.",
         examples=["#FF5733", "#33FF57"]
     )
+
+    excluye_dia : Optional[DiaSemanaEnum]
 
     geometria : Optional[Dict[str, Any]] = Field(
         None,
@@ -151,3 +160,5 @@ class ZonaListItem(BaseModel):
         description="Nombre descriptivo de la zona.",
         examples=["Barrio Candioti", "Barrio Sur"]
     )
+    exlcuye_dia : Optional[DiaSemanaEnum]
+    

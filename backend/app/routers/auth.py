@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.dependencies import get_db
+from app.dependencies.db import get_db
 from app.schemas.auth import LoginRequest, GoogleLoginRequest, AuthResponse
 from app.models.usuario import Usuario
 from app.utils.jwt import (create_access_token, create_refresh_token)

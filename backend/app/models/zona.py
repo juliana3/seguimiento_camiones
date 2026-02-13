@@ -1,9 +1,11 @@
-from sqlalchemy import Column, Integer, String, Text, DateTime, Index
+from sqlalchemy import Column, Integer, String, Text, DateTime, Index, Enum
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from geoalchemy2 import Geometry
 
 from ..db.base import Base
+from ..utils.constantes import DiaSemanaEnum
+
 
 class Zona(Base):
     __tablename__ = "zonas"
@@ -25,13 +27,19 @@ class Zona(Base):
 
     color = Column(String(7), nullable=True, default="#FF5733")  
 
+    excluye_dia = Column(
+        Enum(DiaSemanaEnum),
+        nullable=True,
+        comment="Día de la semana en que la zona no tiene recolección"
+    )
+
 
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
 
     updated_at = Column(DateTime(timezone=True),server_default=func.now(),onupdate=func.now(),nullable=False)
 
 
-    #relaciones
+    #relaciones de zona
     rutas = relationship("Ruta", back_populates="zona")
     camiones = relationship("Camion", back_populates="zona")
     horarios = relationship("Horario", back_populates="zona", cascade="all, delete-orphan")

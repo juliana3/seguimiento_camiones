@@ -26,7 +26,7 @@ class Camion(Base):
         nullable=False
     )
 
-    #relaciones
+    #relaciones de camion 
     zona = relationship("Zona", back_populates="camiones")
     posiciones_gps = relationship("PosicionGPS", back_populates="camion", cascade="all, delete-orphan")
     reportes = relationship("Reporte", back_populates="camion")

@@ -1,23 +1,15 @@
-#get database, get current user dependencies
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 
-from typing import Generator
 from sqlalchemy.orm import Session
-
-from app.db.session import SessionLocal
 from app.models.usuario import Usuario
 from app.config import settings
 
+from .db import get_db
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
-def get_db() -> Generator[Session, None, None]:
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+
 
 
 def get_current_user(token: str =  Depends(oauth2_scheme), db: Session = Depends(get_db)) -> Usuario:

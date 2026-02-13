@@ -1,6 +1,13 @@
 from pydantic import BaseModel, Field, model_validator
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, Literal
 from datetime import datetime
+
+
+class geoJSONPoint(BaseModel):
+    type: Literal["Point"]
+    coordinates: tuple[float, float]  # (longitud, latitud)
+
+
 
 class ReporteCreate(BaseModel):
     lat: float = Field(..., ge=-90, le=90)
@@ -11,7 +18,7 @@ class ReporteCreate(BaseModel):
 
 class ReporteResponse(BaseModel):
     reporte_id: int
-    ubicacion: Dict[str, Any]
+    ubicacion: geoJSONPoint
     direccion: Optional[str]
     fecha_reporte: datetime
     usuario_id: int
