@@ -1,4 +1,6 @@
 Intento de refactorización de Basurapp: 
+[![Proyecto original]](https://github.com/juliana3/proyecto_final)
+
   Este proyecto consiste en el desarrollo de una API backend para gestionar y estimar el estado de la recolección domiciliaria de 
 residuos según la ubicación del usuario. A partir de coordenadas geográficas (latitud y longitud), el sistema determina 
 si existe recolección en la zona, si el servicio ya pasó, está en curso o aún no comenzó, y calcula una estimación del tiempo restante 
